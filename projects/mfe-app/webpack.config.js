@@ -2,6 +2,14 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
 
+
+    output: {
+      module: true, // Habilita suporte a módulos ES
+    },
+    experiments: {
+      outputModule: true, // Habilita suporte a módulos ES
+    },
+  
   name: 'mfe-app',
 
   filename: "remoteEntry.js",

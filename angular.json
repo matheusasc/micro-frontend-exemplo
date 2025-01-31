@@ -154,9 +154,6 @@
 							"projects/host-app/src/styles.scss"
 						],
 						"scripts": [],
-						"ssr": {
-							"entry": "projects/host-app/server.ts"
-						},
 						"main": "projects/host-app/src/main.ts",
 						"extraWebpackConfig": "projects/host-app/webpack.config.js",
 						"commonChunk": false
