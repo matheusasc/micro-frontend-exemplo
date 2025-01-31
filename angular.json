@@ -42,9 +42,6 @@
 							"projects/mfe-app/src/styles.scss"
 						],
 						"scripts": [],
-						"ssr": {
-							"entry": "projects/mfe-app/server.ts"
-						},
 						"main": "projects/mfe-app/src/main.ts",
 						"extraWebpackConfig": "projects/mfe-app/webpack.config.js",
 						"commonChunk": false
@@ -137,11 +134,10 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:application",
+					"builder": "ngx-build-plus:browser",
 					"options": {
 						"outputPath": "dist/host-app",
 						"index": "projects/host-app/src/index.html",
-						"browser": "projects/host-app/src/main.ts",
 						"polyfills": [
 							"zone.js"
 						],
@@ -150,18 +146,20 @@
 						"assets": [
 							{
 								"glob": "**/*",
-								"input": "projects/host-app/public"
+								"input": "projects/host-app/public",
+								"output": "."
 							}
 						],
 						"styles": [
 							"projects/host-app/src/styles.scss"
 						],
 						"scripts": [],
-						"server": "projects/host-app/src/main.server.ts",
-						"prerender": true,
 						"ssr": {
 							"entry": "projects/host-app/server.ts"
-						}
+						},
+						"main": "projects/host-app/src/main.ts",
+						"extraWebpackConfig": "projects/host-app/webpack.config.js",
+						"commonChunk": false
 					},
 					"configurations": {
 						"production": {
@@ -177,7 +175,8 @@
 									"maximumError": "4kB"
 								}
 							],
-							"outputHashing": "all"
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/host-app/webpack.prod.config.js"
 						},
 						"development": {
 							"optimization": false,
@@ -188,16 +187,22 @@
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
+					"builder": "ngx-build-plus:dev-server",
 					"configurations": {
 						"production": {
-							"buildTarget": "host-app:build:production"
+							"buildTarget": "host-app:build:production",
+							"extraWebpackConfig": "projects/host-app/webpack.prod.config.js"
 						},
 						"development": {
 							"buildTarget": "host-app:build:development"
 						}
 					},
-					"defaultConfiguration": "development"
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4200,
+						"publicHost": "http://localhost:4200",
+						"extraWebpackConfig": "projects/host-app/webpack.config.js"
+					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n"
